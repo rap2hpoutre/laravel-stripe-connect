@@ -1,3 +1,5 @@
+# Laravel Stripe Connect
+
 ## Installation
 
 Install via composer
