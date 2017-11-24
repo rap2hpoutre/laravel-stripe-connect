@@ -13,7 +13,7 @@ class StripeConnect
 
     private static function prepare()
     {
-        StripeBase::setApiKey(config('stripe.key'));
+        StripeBase::setApiKey(config('services.stripe.secret'));
     }
 
     private static function getStripeModel($user)

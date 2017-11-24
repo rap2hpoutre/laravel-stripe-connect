@@ -58,6 +58,7 @@ class Transaction
             "amount" => $this->value,
             "currency" => $this->currency,
             "customer" => $customer->account_id,
+            "application_fee" => $this->fee ?? null,
             "destination" => array(
                 "account" => $vendor->account_id,
             ),
