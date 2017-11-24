@@ -54,7 +54,7 @@ class StripeConnect
         return $customer;
     }
 
-    public function transaction()
+    public static function transaction()
     {
         return new Transaction;
     }
