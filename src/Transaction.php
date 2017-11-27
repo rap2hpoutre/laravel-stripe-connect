@@ -57,11 +57,11 @@ class Transaction
         return \Stripe\Charge::create(array(
             "amount" => $this->value,
             "currency" => $this->currency,
-            "customer" => $customer->account_id,
-            "application_fee" => $this->fee ?? null,
+            "customer" => $customer->customer_id,
             "destination" => array(
                 "account" => $vendor->account_id,
             ),
+            "application_fee" => $this->fee ?? null,
         ));
     }
 }

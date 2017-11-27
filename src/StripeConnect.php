@@ -45,7 +45,7 @@ class StripeConnect
         self::prepare();
         $customer = self::getStripeModel($from);
         if (!$customer->customer_id) {
-            $customer->account_id = Customer::create(array_merge([
+            $customer->customer_id = Customer::create(array_merge([
                 "email" => $from->email,
                 'source' => $token,
             ], $params))->id;
@@ -54,8 +54,8 @@ class StripeConnect
         return $customer;
     }
 
-    public static function transaction()
+    public static function transaction($token = null)
     {
-        return new Transaction;
+        return new Transaction($token);
     }
 }
