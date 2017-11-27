@@ -1,5 +1,7 @@
 # Laravel Stripe Connect
 
+Create a marketplace for your Laravel application with Stripe Connect
+
 ## Installation
 
 Install via composer
@@ -13,6 +15,12 @@ Add your stripe credentials in `.env`:
 ```
 STRIPE_KEY=pk_test_XxxXXxXXX
 STRIPE_SECRET=sk_test_XxxXXxXXX
+```
+
+Run migrations:
+
+```
+php artisan migrate
 ```
 
 ## Usage
