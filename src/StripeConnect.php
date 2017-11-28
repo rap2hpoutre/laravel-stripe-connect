@@ -8,14 +8,25 @@ use Stripe\Customer;
 use Stripe\Stripe as StripeBase;
 
 
+/**
+ * Class StripeConnect
+ * @package Rap2hpoutre\LaravelStripeConnect
+ */
 class StripeConnect
 {
 
+    /**
+     *
+     */
     private static function prepare()
     {
         StripeBase::setApiKey(config('services.stripe.secret'));
     }
 
+    /**
+     * @param $user
+     * @return Stripe
+     */
     private static function getStripeModel($user)
     {
         $s = Stripe::where('user_id', $user->id)->first();
@@ -27,6 +38,11 @@ class StripeConnect
         return $s;
     }
 
+    /**
+     * @param $to
+     * @param array $params
+     * @return Stripe
+     */
     public static function createAccount($to, $params = [])
     {
         self::prepare();
@@ -40,6 +56,12 @@ class StripeConnect
         return $vendor;
     }
 
+    /**
+     * @param $token
+     * @param $from
+     * @param array $params
+     * @return Stripe
+     */
     public static function createCustomer($token, $from, $params = [])
     {
         self::prepare();
@@ -54,6 +76,10 @@ class StripeConnect
         return $customer;
     }
 
+    /**
+     * @param null $token
+     * @return Transaction
+     */
     public static function transaction($token = null)
     {
         return new Transaction($token);
