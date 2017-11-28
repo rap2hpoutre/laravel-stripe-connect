@@ -63,7 +63,7 @@ StripeConnect::createCustomer($token, $customer);
 
 Then, (later) charge the customer without token.
 
-``` 
+```php
 StripeConnect::transaction()
     ->amount(1000, 'usd')
     ->from($customer)
@@ -76,13 +76,13 @@ StripeConnect::transaction()
 You may want to create the vendor account before charging anybody.
 Just call `createAccount` with a `User` instance.
 
-``` 
+```php
 StripeConnect::createAccount($vendor);
 ```
 
 ### Exemple #4: Charge with application fee
 
-``` 
+```php
 StripeConnect::transaction()
     ->amount(1000, 'usd')
     ->fee(50)
