@@ -1,5 +1,8 @@
 # Laravel Stripe Connect
 
+[![Packagist](https://img.shields.io/packagist/v/rap2hpoutre/laravel-stripe-connect.svg)]()
+[![Packagist](https://img.shields.io/packagist/l/rap2hpoutre/laravel-stripe-connect.svg)](https://packagist.org/packages/rap2hpoutre/laravel-stripe-connect)
+
 Create a marketplace for your Laravel application with Stripe Connect
 
 ## Installation
