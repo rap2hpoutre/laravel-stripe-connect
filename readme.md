@@ -2,8 +2,11 @@
 
 [![Packagist](https://img.shields.io/packagist/v/rap2hpoutre/laravel-stripe-connect.svg)]()
 [![Packagist](https://img.shields.io/packagist/l/rap2hpoutre/laravel-stripe-connect.svg)](https://packagist.org/packages/rap2hpoutre/laravel-stripe-connect)
+[![Build Status](https://travis-ci.org/rap2hpoutre/laravel-stripe-connect.svg?branch=master)](https://travis-ci.org/rap2hpoutre/laravel-stripe-connect)
 
-Create a marketplace for your Laravel application with Stripe Connect
+> Marketplaces and platforms use Stripe Connect to accept money and pay out to third parties. Connect provides a complete set of building blocks to support virtually any business model, including on-demand businesses, e‑commerce, crowdfunding, fintech, and travel and events. 
+
+Create a marketplace application with this helper for [Stripe Connect](https://stripe.com/connect).
 
 ## Installation
 
