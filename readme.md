@@ -45,7 +45,7 @@ use Rap2hpoutre\LaravelStripeConnect\StripeConnect;
 The customer gives his credentials via Stripe Checkout and is charged.
 It's a one shot process. `$customer` and `$vendor` must be `User` instances.
 
-```
+```php
 StripeConnect::transaction($token)
     ->amount(1000, 'usd')
     ->from($customer)
