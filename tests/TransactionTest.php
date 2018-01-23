@@ -6,10 +6,10 @@ use Rap2hpoutre\LaravelStripeConnect\StripeConnect;
 use Rap2hpoutre\LaravelStripeConnect\Transaction;
 
 /**
- * Class JackyTest
- * @package Rap2hpoutre\LaravelCreditCardValidator\Test
+ * Class TransactionTest
+ * @package Rap2hpoutre\LaravelStripeConnect\Tests
  */
-class ValidatorTest extends TestCase
+class TransactionTest extends TestCase
 {
     public function testSetters()
     {

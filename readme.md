@@ -43,7 +43,7 @@ use Rap2hpoutre\LaravelStripeConnect\StripeConnect;
 ### Example #1: direct charge
 
 The customer gives his credentials via Stripe Checkout and is charged.
-It's a one shot process. `$customer` and `$vendor` must be `User` instances.
+It's a one shot process. `$customer` and `$vendor` must be `User` instances. The `$token` must have been created using [Checkout](https://stripe.com/docs/checkout/tutorial) or [Elements](https://stripe.com/docs/stripe-js).
 
 ```php
 StripeConnect::transaction($token)
