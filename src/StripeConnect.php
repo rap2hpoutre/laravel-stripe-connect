@@ -79,12 +79,12 @@ class StripeConnect
      */
     private static function create($user, $id_key, $callback) {
         self::prepare();
-        $customer = self::getStripeModel($user);
+        $user = self::getStripeModel($user);
         if (!$user->$id_key) {
             $user->$id_key = call_user_func($callback)->id;
             $user->save();
         }
-        return $customer;
+        return $user;
     }
 
     /**
