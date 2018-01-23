@@ -50,7 +50,7 @@ class StripeConnect
             "email" => $to->email,
         ], $params);
         return self::create($to, 'account_id', function () use ($params) {
-            return Customer::create($params);
+            return StripeAccount::create($params);
         });
     }
 
