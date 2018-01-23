@@ -45,16 +45,13 @@ class StripeConnect
      */
     public static function createAccount($to, $params = [])
     {
-        self::prepare();
-        $vendor = self::getStripeModel($to);
-        if (!$vendor->account_id) {
-            $vendor->account_id = StripeAccount::create(array_merge([
-                "type" => "custom",
-                "email" => $to->email,
-            ], $params))->id;
-            $vendor->save();
-        }
-        return $vendor;
+        $params = array_merge([
+            "type" => "custom",
+            "email" => $to->email,
+        ], $params);
+        return self::create($to, 'account_id', function () use ($params) {
+            return Customer::create($params);
+        });
     }
 
     /**
@@ -65,14 +62,27 @@ class StripeConnect
      */
     public static function createCustomer($token, $from, $params = [])
     {
+        $params = array_merge([
+            "email" => $from->email,
+            'source' => $token,
+        ], $params);
+        return self::create($from, 'customer_id', function () use ($params) {
+            return Customer::create($params);
+        });
+    }
+
+    /**
+     * @param $user
+     * @param $id_key
+     * @param $callback
+     * @return Stripe
+     */
+    private static function create($user, $id_key, $callback) {
         self::prepare();
-        $customer = self::getStripeModel($from);
-        if (!$customer->customer_id) {
-            $customer->customer_id = Customer::create(array_merge([
-                "email" => $from->email,
-                'source' => $token,
-            ], $params))->id;
-            $customer->save();
+        $customer = self::getStripeModel($user);
+        if (!$user->$id_key) {
+            $user->$id_key = call_user_func($callback)->id;
+            $user->save();
         }
         return $customer;
     }
