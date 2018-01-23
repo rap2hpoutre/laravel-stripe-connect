@@ -4,22 +4,38 @@
 namespace Rap2hpoutre\LaravelStripeConnect;
 
 use Stripe\Account as StripeAccount;
+use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe as StripeBase;
 
 
+/**
+ * Class Transaction
+ * @package Rap2hpoutre\LaravelStripeConnect
+ */
 class Transaction
 {
-    private $from, $to, $value, $currency, $to_params;
-    private $token;
-    private $fee;
-    private $from_params;
+    /**
+     * @var
+     */
+    private $from, $to, $value, $currency, $to_params, $token, $fee, $from_params;
 
+    /**
+     * Transaction constructor.
+     * @param null $token
+     */
     public function __construct($token = null)
     {
         $this->token = $token;
     }
 
+    /**
+     * Set the Customer.
+     *
+     * @param $user
+     * @param array $params
+     * @return $this
+     */
     public function from($user, $params = [])
     {
         $this->from = $user;
@@ -27,6 +43,13 @@ class Transaction
         return $this;
     }
 
+    /**
+     * Set the Vendor.
+     *
+     * @param $user
+     * @param array $params
+     * @return $this
+     */
     public function to($user, $params = [])
     {
         $this->to = $user;
@@ -34,6 +57,13 @@ class Transaction
         return $this;
     }
 
+    /**
+     * The amount of the transaction.
+     *
+     * @param $value
+     * @param $currency
+     * @return $this
+     */
     public function amount($value, $currency)
     {
         $this->value = $value;
@@ -41,27 +71,39 @@ class Transaction
         return $this;
     }
 
+    /**
+     * Take your fees here.
+     *
+     * @param $amount
+     * @return $this
+     */
     public function fee($amount)
     {
         $this->fee = $amount;
         return $this;
     }
 
-    public function create()
+    /**
+     * Create the transaction: charge customer and credit vendor.
+     *
+     * @param array $params
+     * @return Charge
+     */
+    public function create($params = [])
     {
         // Prepare vendor
         $vendor = StripeConnect::createAccount($this->to, $this->to_params);
         // Prepare customer
         $customer = StripeConnect::createCustomer($this->token, $this->from, $this->from_params);
 
-        return \Stripe\Charge::create(array(
+        return Charge::create(array_merge([
             "amount" => $this->value,
             "currency" => $this->currency,
             "customer" => $customer->customer_id,
-            "destination" => array(
+            "destination" => [
                 "account" => $vendor->account_id,
-            ),
+            ],
             "application_fee" => $this->fee ?? null,
-        ));
+        ]), $params);
     }
 }
