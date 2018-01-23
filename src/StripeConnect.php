@@ -50,6 +50,7 @@ class StripeConnect
         if (!$vendor->account_id) {
             $vendor->account_id = StripeAccount::create(array_merge([
                 "type" => "custom",
+                "email" => $to->email,
             ], $params))->id;
             $vendor->save();
         }
