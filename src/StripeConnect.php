@@ -72,6 +72,26 @@ class StripeConnect
     }
 
     /**
+     * @param $token
+     * @param $from
+     * @param array $params
+     * @return Stripe
+     */
+    public function createOrUpdateCustomer($token, $from, $params = [])
+    {
+        self::prepare();
+        $user = self::getStripeModel($from);
+        if (!$user) {
+            return self::createCustomer($token, $from, $params);
+        } else {
+            $customer = \Stripe\Customer::retrieve($token->customer_id);
+            $customer->source = $token;
+            $customer->save();
+            return $user;
+        }
+    }
+
+    /**
      * @param $user
      * @param $id_key
      * @param $callback

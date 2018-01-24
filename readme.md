@@ -67,6 +67,7 @@ Then, (later) charge the customer without token.
 ```php
 StripeConnect::transaction()
     ->amount(1000, 'usd')
+    ->useSavedCustomer()
     ->from($customer)
     ->to($vendor)
     ->create(); 

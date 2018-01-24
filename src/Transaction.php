@@ -18,7 +18,7 @@ class Transaction
     /**
      * @var
      */
-    private $from, $to, $value, $currency, $to_params, $token, $fee, $from_params;
+    private $from, $to, $value, $currency, $to_params, $token, $fee, $from_params, $saved_customer;
 
     /**
      * Transaction constructor.
@@ -40,6 +40,15 @@ class Transaction
     {
         $this->from = $user;
         $this->from_params = $params;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function useSavedCustomer()
+    {
+        $this->saved_customer = true;
         return $this;
     }
 
@@ -85,6 +94,7 @@ class Transaction
 
     /**
      * Create the transaction: charge customer and credit vendor.
+     * This function saves the two accounts.
      *
      * @param array $params
      * @return Charge
@@ -94,12 +104,16 @@ class Transaction
         // Prepare vendor
         $vendor = StripeConnect::createAccount($this->to, $this->to_params);
         // Prepare customer
-        $customer = StripeConnect::createCustomer($this->token, $this->from, $this->from_params);
+        if ($this->saved_customer) {
+            $customer = StripeConnect::createCustomer($this->token, $this->from, $this->from_params);
+            $params["customer"] = $customer->customer_id;
+        } else {
+            $params["source"] = $this->token;
+        }
 
         return Charge::create(array_merge([
             "amount" => $this->value,
             "currency" => $this->currency,
-            "customer" => $customer->customer_id,
             "destination" => [
                 "account" => $vendor->account_id,
             ],
