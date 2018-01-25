@@ -118,6 +118,6 @@ class Transaction
                 "account" => $vendor->account_id,
             ],
             "application_fee" => $this->fee ?? null,
-        ]), $params);
+        ], $params));
     }
 }
