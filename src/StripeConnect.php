@@ -29,13 +29,13 @@ class StripeConnect
      */
     private static function getStripeModel($user)
     {
-        $s = Stripe::where('user_id', $user->id)->first();
-        if (!$s) {
-            $s = new Stripe();
-            $s->user_id = $user->id;
-            $s->save();
+        $stripe = Stripe::where('user_id', $user->id)->first();
+        if (!$stripe) {
+            $stripe = new Stripe();
+            $stripe->user_id = $user->id;
+            $stripe->save();
         }
-        return $s;
+        return $stripe;
     }
 
     /**
@@ -83,12 +83,11 @@ class StripeConnect
         $user = self::getStripeModel($from);
         if (!$user) {
             return self::createCustomer($token, $from, $params);
-        } else {
-            $customer = \Stripe\Customer::retrieve($token->customer_id);
-            $customer->source = $token;
-            $customer->save();
-            return $user;
         }
+        $customer = \Stripe\Customer::retrieve($token->customer_id);
+        $customer->source = $token;
+        $customer->save();
+        return $user;
     }
 
     /**
