@@ -85,7 +85,7 @@ StripeConnect::createAccount($vendor);
 ### Exemple #4: Charge with application fee
 
 ```php
-StripeConnect::transaction()
+StripeConnect::transaction($token)
     ->amount(1000, 'usd')
     ->fee(50)
     ->from($customer)
