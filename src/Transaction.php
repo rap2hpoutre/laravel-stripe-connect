@@ -7,7 +7,7 @@ use Stripe\Account as StripeAccount;
 use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\Stripe as StripeBase;
-
+use Stripe\Transfer;
 
 /**
  * Class Transaction
@@ -18,7 +18,7 @@ class Transaction
     /**
      * @var
      */
-    private $from, $to, $value, $currency, $to_params, $token, $fee, $from_params, $saved_customer;
+    private $from, $to, $value, $currency, $to_params, $token, $fee, $from_params, $saved_customer, $transfers = [];
 
     /**
      * Transaction constructor.
@@ -93,6 +93,27 @@ class Transaction
     }
 
     /**
+     * Transfer an amount from the charge to someone.
+     *
+     * @param $amount
+     * @param $receiver
+     * @param $currency
+     * @param $receiver_params
+     * @return $this
+     */
+    public function transfer($amount, $receiver, $currency = null, $receiver_params = null)
+    {
+        array_push($this->transfers, [
+            'amount' => $amount,
+            'currency' => $currency ?? $this->currency,
+            'receiver' => $receiver,
+            'receiver_params' => $receiver_params
+        ]);
+
+        return $this;
+    }
+
+    /**
      * Create the transaction: charge customer and credit vendor.
      * This function saves the two accounts.
      *
@@ -103,6 +124,7 @@ class Transaction
     {
         // Prepare vendor
         $vendor = StripeConnect::createAccount($this->to, $this->to_params);
+
         // Prepare customer
         if ($this->saved_customer) {
             $customer = StripeConnect::createCustomer($this->token, $this->from, $this->from_params);
@@ -111,7 +133,7 @@ class Transaction
             $params["source"] = $this->token;
         }
 
-        return Charge::create(array_merge([
+        $charge =  Charge::create(array_merge([
             "amount" => $this->value,
             "currency" => $this->currency,
             "destination" => [
@@ -119,5 +141,19 @@ class Transaction
             ],
             "application_fee" => $this->fee ?? null,
         ], $params));
+
+        // Send the transfers to the respective receiver
+        foreach ($this->transfers as $transfer) {
+            $receiver = StripeConnect::createAccount($transfer['receiver'], $transfer['receiver_params']);
+
+            Transfer::create([
+                'amount' => $transfer['amount'],
+                'currency' => $this->currency,
+                'destination' => $receiver->account_id,
+                'transfer_group' => $charge->transfer_group
+            ]);
+        }
+
+        return $charge;
     }
 }
