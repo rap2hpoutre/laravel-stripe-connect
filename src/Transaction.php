@@ -101,7 +101,7 @@ class Transaction
      * @param $receiver_params
      * @return $this
      */
-    public function transfer($amount, $receiver, $currency = null, $receiver_params = null)
+    public function transfer($amount, $receiver, $currency = null, $receiver_params = [])
     {
         array_push($this->transfers, [
             'amount' => $amount,
