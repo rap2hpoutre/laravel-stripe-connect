@@ -1,3 +1,10 @@
+## Deprecation warning ⚠️
+This package is not maintained anymore.
+
+See: https://www.reddit.com/r/laravel/comments/avdki2/is_there_an_alternative_to_laravelstripeconnect/
+
+---
+
 # Laravel Stripe Connect
 
 [![Packagist](https://img.shields.io/packagist/v/rap2hpoutre/laravel-stripe-connect.svg)]()
