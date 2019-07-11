@@ -9,6 +9,8 @@
 
 Create a marketplace application with this helper for [Stripe Connect](https://stripe.com/connect).
 
+⚠️ _Deprecated, looking for a competitor. See this [reddit post](https://www.reddit.com/r/laravel/comments/avdki2/is_there_an_alternative_to_laravelstripeconnect/)_
+
 ## Installation
 
 Install via composer
