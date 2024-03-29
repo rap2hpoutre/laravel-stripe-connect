@@ -2,10 +2,17 @@
 
 [![Packagist](https://img.shields.io/packagist/v/rap2hpoutre/laravel-stripe-connect.svg)]()
 [![Packagist](https://img.shields.io/packagist/l/rap2hpoutre/laravel-stripe-connect.svg)](https://packagist.org/packages/rap2hpoutre/laravel-stripe-connect)
-[![Build Status](https://travis-ci.org/rap2hpoutre/laravel-stripe-connect.svg?branch=master)](https://travis-ci.org/rap2hpoutre/laravel-stripe-connect)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rap2hpoutre/laravel-stripe-connect/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rap2hpoutre/laravel-stripe-connect/?branch=master)
 
-⚠️ _Deprecated, looking for a competitor. See this [reddit post](https://www.reddit.com/r/laravel/comments/avdki2/is_there_an_alternative_to_laravelstripeconnect/)._
+## 2024 Update 🎉
+
+[@simonhamp](https://github.com/simonhamp) made a fork: https://github.com/simonhamp/laravel-stripe-connect. You should now use this one!
+
+## Previous readme
+
+⚠️ _Deprecated, then abandoned in 2019, ~~looking for a competitor~~. See this [reddit post](https://www.reddit.com/r/laravel/comments/avdki2/is_there_an_alternative_to_laravelstripeconnect/)._
+
+
 
 > Marketplaces and platforms use Stripe Connect to accept money and pay out to third parties. Connect provides a complete set of building blocks to support virtually any business model, including on-demand businesses, e‑commerce, crowdfunding, fintech, and travel and events. 
 
